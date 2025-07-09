@@ -1,0 +1,27 @@
+{
+  "name": "trabalho2_backend",
+  "version": "1.0.0",
+  "description": "server backend for Work Class",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx --watch server/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elitinho123456/Trabalho2_Backend.git"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": "Elitinho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Elitinho123456/Trabalho2_Backend/issues"
+  },
+  "homepage": "https://github.com/Elitinho123456/Trabalho2_Backend#readme",
+  "dependencies": {
+    "fastify-plugin": "^5.0.1",
+    "tsx": "^4.20.3"
+  }
+}
