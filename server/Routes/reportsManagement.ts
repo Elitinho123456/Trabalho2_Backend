@@ -8,7 +8,7 @@ async function reportRoutes(fastify: FastifyInstance) {
     // =======================================================
     // RELATÓRIO - MINECRAFT DUNGEONS
     // =======================================================
-    fastify.get('/relatorio/itens', async (request: FastifyRequest, reply: FastifyReply) => {
+    fastify.get('/api/relatorio/itens', async (request: FastifyRequest, reply: FastifyReply) => {
         try {
             const query = `
                 SELECT i.id, i.nome, i.poder, i.raridade, c.nome AS nome_categoria

@@ -31,63 +31,66 @@ interface IQueryString {
 }
 
 // Função que agrupa e registra todas as rotas do CRUD de Dungeons
-export async function rotasMinecraft(fastify:FastifyInstance, opts: any) {
+export async function rotasMinecraft(fastify: FastifyInstance, opts: any) {
 
-    // ROTA: Listar todas as categorias do Dungeons
-    fastify.get('/categorias', async (request: FastifyRequest, reply: FastifyReply) => {
-        const [rows] = await conn.query('SELECT * FROM categorias_d');
-        reply.send(rows);
-    });
 
-    // ROTA: Listar todos os itens do Dungeons (com filtro de raridade)
-    fastify.get('/itens', async (request: FastifyRequest, reply: FastifyReply) => {
-        const { raridade } = request.query as { raridade?: string };
-        let query = 'SELECT * FROM itens_d';
-        if (raridade) {
-            query += ` WHERE raridade = '${raridade}'`;
-        }
-        const [rows] = await conn.query(query);
-        reply.send(rows);
-    });
+    fastify.register(async (instance) => {
+        // ROTA: Listar todas as categorias do Dungeons
+        fastify.get('/categoria', async (request: FastifyRequest, reply: FastifyReply) => {
+            const [rows] = await conn.query('SELECT * FROM categorias_d');
+            reply.send(rows);
+        });
 
-    // ROTA: Buscar um item específico por ID
-    fastify.get('/itens/:id', async (request: FastifyRequest, reply: FastifyReply) => {
-        const { id } = request.params as { id: string };
-        const [rows] = await conn.query('SELECT * FROM itens_d WHERE id = ?', [id]);
-        if ((rows as any[]).length > 0) {
-            reply.send((rows as any[])[0]);
-        } else {
-            reply.status(404).send({ message: 'Item não encontrado' });
-        }
-    });
+        // ROTA: Listar todos os itens do Dungeons (com filtro de raridade)
+        fastify.get('/itens', async (request: FastifyRequest, reply: FastifyReply) => {
+            const { raridade } = request.query as { raridade?: string };
+            let query = 'SELECT * FROM itens_d';
+            if (raridade) {
+                query += ` WHERE raridade = '${raridade}'`;
+            }
+            const [rows] = await conn.query(query);
+            reply.send(rows);
+        });
 
-    // ROTA: Criar um novo item
-    fastify.post('/itens', async (request: FastifyRequest, reply: FastifyReply) => {
-        const { nome, poder, raridade, categoria_id } = request.body as ItemBody;
-        await conn.query(
-            'INSERT INTO itens_d (nome, poder, raridade, categoria_id) VALUES (?, ?, ?, ?)',
-            [nome, poder, raridade, categoria_id]
-        );
-        reply.status(201).send({ message: 'Item criado com sucesso!' });
-    });
+        // ROTA: Buscar um item específico por ID
+        fastify.get('/itens/:id', async (request: FastifyRequest, reply: FastifyReply) => {
+            const { id } = request.params as { id: string };
+            const [rows] = await conn.query('SELECT * FROM itens_d WHERE id = ?', [id]);
+            if ((rows as any[]).length > 0) {
+                reply.send((rows as any[])[0]);
+            } else {
+                reply.status(404).send({ message: 'Item não encontrado' });
+            }
+        });
 
-    // ROTA: Atualizar um item existente
-    fastify.put('/itens/:id', async (request: FastifyRequest, reply: FastifyReply) => {
-        const { id } = request.params as { id: string };
-        const { nome, poder, raridade, categoria_id } = request.body as ItemBody;
-        await conn.query(
-            'UPDATE itens_d SET nome = ?, poder = ?, raridade = ?, categoria_id = ? WHERE id = ?',
-            [nome, poder, raridade, categoria_id, id]
-        );
-        reply.status(204).send();
-    });
+        // ROTA: Criar um novo item
+        fastify.post('/itens', async (request: FastifyRequest, reply: FastifyReply) => {
+            const { nome, poder, raridade, categoria_id } = request.body as ItemBody;
+            await conn.query(
+                'INSERT INTO itens_d (nome, poder, raridade, categoria_id) VALUES (?, ?, ?, ?)',
+                [nome, poder, raridade, categoria_id]
+            );
+            reply.status(201).send({ message: 'Item criado com sucesso!' });
+        });
 
-    // ROTA: Deletar um item
-    fastify.delete('/itens/:id', async (request: FastifyRequest, reply: FastifyReply) => {
-        const { id } = request.params as { id: string };
-        await conn.query('DELETE FROM itens_d WHERE id = ?', [id]);
-        reply.status(204).send();
-    });
+        // ROTA: Atualizar um item existente
+        fastify.put('/itens/:id', async (request: FastifyRequest, reply: FastifyReply) => {
+            const { id } = request.params as { id: string };
+            const { nome, poder, raridade, categoria_id } = request.body as ItemBody;
+            await conn.query(
+                'UPDATE itens_d SET nome = ?, poder = ?, raridade = ?, categoria_id = ? WHERE id = ?',
+                [nome, poder, raridade, categoria_id, id]
+            );
+            reply.status(204).send();
+        });
+
+        // ROTA: Deletar um item
+        fastify.delete('/itens/:id', async (request: FastifyRequest, reply: FastifyReply) => {
+            const { id } = request.params as { id: string };
+            await conn.query('DELETE FROM itens_d WHERE id = ?', [id]);
+            reply.status(204).send();
+        });
+    }, { prefix: '/api' });
 
     //<------------------------------------------>
     //Rotas para o Java

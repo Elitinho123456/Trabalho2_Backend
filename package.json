@@ -23,5 +23,11 @@
   "dependencies": {
     "fastify-plugin": "^5.0.1",
     "tsx": "^4.20.3"
+  },
+  "devDependencies": {
+    "@fastify/cors": "^11.0.1",
+    "@types/node": "^24.0.12",
+    "fastify": "^5.4.0",
+    "mysql2": "^3.14.1"
   }
 }
