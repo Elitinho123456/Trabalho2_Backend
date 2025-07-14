@@ -113,3 +113,53 @@ INSERT INTO user_downloads (user_id, product_id) VALUES
 (1, 1),
 (1, 2),
 (2, 1);
+
+
+-- =======================================================================
+-- SCRIPT PARA BANCO DE DADOS - SEÇÃO MINECRAFT EDUCATION (COM PREFIXOS)
+-- =======================================================================
+
+
+-- Criação da tabela para as Matérias (Subjects)
+CREATE TABLE `subjects` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Criação da tabela para as Aulas (Lessons)
+CREATE TABLE `lessons` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `description` TEXT NULL,
+  `subject_id` INT NULL,
+  `target_age_group` VARCHAR(50) NULL,
+  `content_url` VARCHAR(255) NULL,
+  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `fk_lessons_subject_id_idx` (`subject_id` ASC),
+  CONSTRAINT `fk_lessons_subject_id`
+    FOREIGN KEY (`subject_id`)
+    REFERENCES `subjects` (`id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Inserir dados de exemplo na tabela 'subjects'
+INSERT INTO `subjects` (`name`) VALUES
+('História'),
+('Matemática'),
+('Ciências'),
+('Química'),
+('Cidadania Digital');
+
+-- Inserir dados de exemplo na tabela 'lessons'
+-- (Note que os subject_id correspondem aos IDs inseridos acima)
+INSERT INTO `lessons` (`title`, `description`, `subject_id`, `target_age_group`, `content_url`) VALUES
+('Explorando as Pirâmides do Egito', 'Uma viagem virtual para descobrir os segredos das pirâmides e dos faraós.', 1, '10-12 anos', 'http://example.com/egito'),
+('Fundamentos da Álgebra com Blocos', 'Aprenda conceitos de álgebra de forma visual e interativa usando blocos de Minecraft.', 2, '11-14 anos', 'http://example.com/algebra'),
+('O Ciclo da Água', 'Acompanhe o ciclo da água em um bioma de Minecraft, desde a evaporação até a precipitação.', 3, '8-10 anos', 'http://example.com/agua'),
+('Introdução à Tabela Periódica', 'Construa elementos da tabela periódica e descubra suas propriedades no Laboratório de Química.', 4, '12-15 anos', 'http://example.com/quimica'),
+('Navegando na Internet com Segurança', 'Uma aula sobre como identificar fake news e proteger suas informações online.', 5, '9-11 anos', 'http://example.com/seguranca');
