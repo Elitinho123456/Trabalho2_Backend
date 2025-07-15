@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Elitinho123456/Trabalho2_Backend#readme",
   "dependencies": {
+    "express": "^5.1.0",
     "fastify-plugin": "^5.0.1",
     "tsx": "^4.20.3"
   },

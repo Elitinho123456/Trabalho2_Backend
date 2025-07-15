@@ -14,6 +14,7 @@ fastify.register(cors, {
 fastify.register(require("./Routes/userManagement"));
 fastify.register(require("./Routes/gamesManagement"));
 fastify.register(require("./Routes/reportsManagement")); // Agora registra o plugin unificado
+fastify.register(require("./Routes/bannerManagement"));
 
 fastify.listen({ port: 8888 }, (err, address) => {
     if (err) {

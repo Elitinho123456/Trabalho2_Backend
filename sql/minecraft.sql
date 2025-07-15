@@ -114,6 +114,22 @@ INSERT INTO user_downloads (user_id, product_id) VALUES
 (1, 2),
 (2, 1);
 
+-- =======================================================================
+-- SCRIPT PARA BANCO DE DADOS - SEÇÃO MINECRAFT BEDROCK (COM PREFIXOS)
+-- =======================================================================
+
+
+-- Adicionar ao seu arquivo minecraft.sql ou como uma nova migração
+CREATE TABLE IF NOT EXISTS banners (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(255) NOT NULL, -- Ex: 'carousel', 'promotion'
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    images JSON, -- Para armazenar um array de URLs de imagens em formato JSON
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 
 -- =======================================================================
 -- SCRIPT PARA BANCO DE DADOS - SEÇÃO MINECRAFT EDUCATION (COM PREFIXOS)
