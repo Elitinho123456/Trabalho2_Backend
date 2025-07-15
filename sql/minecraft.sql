@@ -163,3 +163,35 @@ INSERT INTO `lessons` (`title`, `description`, `subject_id`, `target_age_group`,
 ('O Ciclo da Água', 'Acompanhe o ciclo da água em um bioma de Minecraft, desde a evaporação até a precipitação.', 3, '8-10 anos', 'http://example.com/agua'),
 ('Introdução à Tabela Periódica', 'Construa elementos da tabela periódica e descubra suas propriedades no Laboratório de Química.', 4, '12-15 anos', 'http://example.com/quimica'),
 ('Navegando na Internet com Segurança', 'Uma aula sobre como identificar fake news e proteger suas informações online.', 5, '9-11 anos', 'http://example.com/seguranca');
+
+
+
+-- =======================================================================
+-- SCRIPT PARA BANCO DE DADOS - SEÇÃO MINECRAFT LEGENDS (COM PREFIXOS)
+-- =======================================================================
+-- Cria a tabela minecraft_skins se ela não existir
+-- 1. Crie o banco de dados
+-- Substitua 'minecraft_db' pelo nome que você deseja para o seu banco de dados.
+-- Lembre-se de usar este mesmo nome na sua string de conexão no backend (server.ts).
+CREATE DATABASE IF NOT EXISTS minecraft_db;
+
+-- 2. Selecione o banco de dados recém-criado para usá-lo
+USE minecraft_db;
+
+-- 'legends_items' é o nome da tabela que o seu código Fastify espera.
+CREATE TABLE IF NOT EXISTS legends_items (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- ID único e auto-incrementável para cada item
+    name VARCHAR(255) NOT NULL,       -- Nome do item/entidade (ex: "Piglin", "Creeper")
+    type VARCHAR(100) NOT NULL,       -- Tipo do item/entidade (ex: "Mob", "Structure", "Resource", "Upgrade")
+    description TEXT NOT NULL,        -- Descrição detalhada do item/entidade
+    imageUrl VARCHAR(255),            -- URL opcional para uma imagem do item
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Data e hora de criação
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Data e hora da última atualização
+);
+
+-- Opcional: Adicionar um usuário e conceder permissões (se você não estiver usando root ou um usuário já configurado)
+-- Substitua 'seu_usuario' e 'sua_senha' por credenciais seguras.
+-- Se você já tem um usuário configurado no seu server.ts, pode pular esta parte.
+CREATE USER 'seu_usuario'@'localhost' IDENTIFIED BY 'sua_senha';
+GRANT ALL PRIVILEGES ON minecraft_db.* TO 'seu_usuario'@'localhost';
+FLUSH PRIVILEGES;
