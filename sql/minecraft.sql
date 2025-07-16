@@ -186,3 +186,16 @@ INSERT INTO `lessons` (`title`, `description`, `subject_id`, `target_age_group`,
 -- SCRIPT PARA BANCO DE DADOS - SEÇÃO MINECRAFT LEGENDS (COM PREFIXOS)
 -- =======================================================================
 -- =====================================================
+CREATE TABLE skins (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    creator VARCHAR(255) NULL,
+    imageUrl VARCHAR(2048) NOT NULL,
+    description TEXT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+INSERT INTO skins (name, creator, imageUrl, description) VALUES
+('Steve de Terno', 'Mojang', 'https://i.imgur.com/DrE0p56.png', 'O clássico Steve, mas pronto para negócios.'),
+('Creeper Galáctico', 'PlayerX', 'https://i.imgur.com/8Jp2w3n.png', 'Um creeper com as cores da galáxia. Cuidado, a explosão é cósmica!'),
+('Cavaleiro de Netherite', 'BuilderPro', 'https://i.imgur.com/I7eB52j.png', 'Armadura completa de netherite para máxima proteção.');
