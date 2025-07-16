@@ -23,7 +23,7 @@ fastify.listen({ port: 8888 }, (err, address) => {
     }
     console.log(`Servidor rodando no endereço ${address}`);
 });
-import { conn } from './db/conn';
+
 
 // Configuração de CORS para permitir requisições do frontend
 fastify.register(async function (fastify) {
@@ -34,6 +34,7 @@ fastify.register(async function (fastify) {
         
         if (request.method === 'OPTIONS') {
             reply.status(200).send();
+            
         }
     });
 });
