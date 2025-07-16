@@ -1,5 +1,6 @@
 // bannerManagement.ts
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { fastifyPlugin } from 'fastify-plugin'
 // Importa RowDataPacket para resultados de SELECT e OkPacket para resultados de INSERT/UPDATE/DELETE.
 import { RowDataPacket, OkPacket } from 'mysql2/promise';
 import { conn } from '../db/conn'; // Reutiliza sua conexão com o banco de dados
@@ -13,7 +14,7 @@ interface Banner {
     images: string[]; // Array de URLs de imagens
 }
 
-export async function bannerRoutes(fastify: FastifyInstance) {
+async function bannerRoutes(fastify: FastifyInstance) {
 
     // Rota para criar um novo banner (POST)
     fastify.post('/banners', async (request: FastifyRequest<{ Body: Banner }>, reply: FastifyReply) => {
@@ -140,3 +141,5 @@ export async function bannerRoutes(fastify: FastifyInstance) {
         }
     });
 }
+
+export default fastifyPlugin(bannerRoutes);
